@@ -58,6 +58,8 @@ Route::prefix('/staff')->middleware(['auth:web', 'role:staff'])->group(function 
 
     Route::get('/export/{id}', [PaymentExportController::class, 'export'])->name('export.pr');
 
+    Route::get('/export_pdf/{id}', [PaymentExportController::class, 'exportPdf'])->name('export.pdf');
+
 });
 
 Route::prefix('/admin')->middleware(['auth:web', 'role:admin'])->group(function () {

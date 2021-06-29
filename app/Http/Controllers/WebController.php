@@ -9,7 +9,33 @@ class WebController extends Controller
 {
     public function showHome()
     {
-        return view('staff.home')->with(['title' => 'Home']);
+        $totalRequest = PaymentRequest::where('id_staff', auth()->user()->id_staff)
+            ->get()
+            ->count();
+
+        $requestDone = PaymentRequest::where('status', 'Done')
+            ->where('id_staff', auth()->user()->id_staff)
+            ->get()
+            ->count();
+
+        $pendingRequest = PaymentRequest::where('id_staff', auth()->user()->id_staff)
+            ->where('status', 'Requested')
+            ->orWhere('status', 'Settlement')
+            ->get()
+            ->count();
+
+        $declinedRequest = PaymentRequest::where('status', 'Rejected')
+            ->Where('status', 'Rejected')
+            ->where('id_staff', auth()->user()->id_staff)
+            ->get()
+            ->count();
+
+        return view('staff.home')
+            ->with(['title' => 'Home'])
+            ->with(['total_request' => $totalRequest])
+            ->with(['pending_request' => $pendingRequest])
+            ->with(['declined_request' => $declinedRequest])
+            ->with(['request_done' => $requestDone]);
     }
 
     public function showMyRequest()
@@ -23,13 +49,11 @@ class WebController extends Controller
             ->with(['myrequests' => $myrequest]);
     }
 
-    public function showMyRequestById($id)
+    public function showMyRequestById(PaymentRequest $id)
     {
-        $myrequest = PaymentRequest::find(decrypt($id))->first();
-
         return view('staff.payment_request.detail_request')
             ->with(['title' => 'Detail Request'])
-            ->with(['myrequest' => $myrequest]);
+            ->with(['myrequest' => $id]);
     }
 
     public function showSettlement()
@@ -45,13 +69,11 @@ class WebController extends Controller
             ->with(['settlements' => $settlement]);
     }
 
-    public function showUploadSettlement($id)
+    public function showUploadSettlement(PaymentRequest $id)
     {
-        $settlement = decrypt($id);
-
         return view('staff.settlement.upload')
             ->with(['title' => 'Upload Settlement'])
-            ->with(['settlement' => $settlement]);
+            ->with(['settlement' => $id]);
     }
 
     public function showAddRequest()

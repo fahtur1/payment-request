@@ -25,7 +25,9 @@
                     @foreach($settlements as $settlement)
                         <tr>
                             <td class="align-middle">{{ $loop->iteration }}</td>
-                            <td class="align-middle">{{ $settlement->tanggal_pengajuan }}</td>
+                            <td class="align-middle">
+                                {{ $settlement->tanggal_pengajuan }}
+                            </td>
                             <td class="align-middle text-center">
                                 @if($settlement->status == 'Settlement' || $settlement->status == 'Requested')
                                     <span class="badge badge-pill badge-primary">{{ $settlement->status }}</span>
@@ -36,16 +38,19 @@
                             <td class="align-middle text-center">
                                 @if($settlement->status == 'Settlement')
                                     <a class="btn btn-warning"
-                                       href="{{ route('staff.settlement.upload', encrypt($settlement)) }}">
+                                       href="{{ route('staff.settlement.upload', $settlement) }}">
                                         <i class="fas fa-upload"></i>
                                     </a>
                                 @elseif($settlement->status == 'Done')
-                                    <a href="{{ route('export.pr', encrypt($settlement)) }}" class="btn btn-warning">
+                                    <a href="{{ route('export.pdf', $settlement) }}" class="btn btn-secondary">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </a>
+                                    <a href="{{ route('export.pr', $settlement) }}" class="btn btn-warning">
                                         <i class="fas fa-print"></i>
                                     </a>
                                 @endif
                                 <a class="btn btn-primary"
-                                   href="{{ route('staff.request.myrequestbyid', encrypt($settlement)) }}">
+                                   href="{{ route('staff.request.myrequestbyid', $settlement) }}">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
                             </td>

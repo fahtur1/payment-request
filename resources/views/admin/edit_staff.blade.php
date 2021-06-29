@@ -1,5 +1,9 @@
 @extends('layout.admin')
 
+@section('back')
+    <a class="btn btn-outline-primary" href="{{ url()->previous() }}"><i class="fa fa-arrow-left"></i></a>
+@endsection
+
 @section('content')
     <div class="row mb-3">
         <div class="col-5 mx-auto">

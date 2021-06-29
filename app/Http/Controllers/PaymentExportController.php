@@ -2,22 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\PaymentExport;
-use App\Imports\UsersImport;
+use App\Exports\PaymentExportWithChange;
+use App\Exports\PaymentExportWithoutChange;
 use App\Models\PaymentRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
-use Maatwebsite\Excel\Excel as PDF_FORMAT;
+use Barryvdh\DomPDF\Facade as PDF;
+use Mpdf\Tag\P;
+
 
 class PaymentExportController extends Controller
 {
-    public function export($id)
+    public function export(PaymentRequest $id)
     {
-        $payment = PaymentRequest::find(decrypt($id))->first();
+        $grandTotal = 0;
+        $budget = 0;
 
-        return Excel::download(new PaymentExport($payment), 'mangstaplagi.xlsx');
-//        return (new PaymentExport($payment))->download('invoices.xlsx', \Maatwebsite\Excel\Excel::XLSX);
-//        return Excel::download(new PaymentExport($payment), 'mantap.pdf', PDF_FORMAT::MPDF);
+        foreach ($id->item as $item) {
+            $grandTotal += $item->settlement_amount;
+            $budget += $item->amount;
+        }
+
+        $change = $budget - $grandTotal;
+
+        $randomName = uniqid();
+
+        $fileNameExcel = 'settlement-' . date('d-m-Y') . '-' . $randomName . '.xlsx';
+
+        if ($change <= 0) {
+            return Excel::download(new PaymentExportWithoutChange($id), $fileNameExcel);
+        } else {
+            return Excel::download(new PaymentExportWithChange($id, $change), $fileNameExcel);
+        }
+
     }
+
+    function exportPdf(PaymentRequest $id)
+    {
+        $pdf = PDF::loadView('pdf.bukti_settle', ['payment' => $id]);
+
+        $fileNamePdf = 'settlement-' . date('d-m-Y') . '-' . uniqid() . '.pdf';
+
+        return $pdf->download($fileNamePdf);
+    }
+
+    function rupiah($angka)
+    {
+        return "Rp " . number_format($angka, 2, ',', '.');
+    }
+
 }

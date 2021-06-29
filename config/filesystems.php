@@ -52,6 +52,12 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'settlement' => [
+            'driver' => 'local',
+            'root' => public_path('settlement'),
+            'visibility' => 'private'
+        ],
+
     ],
 
     /*

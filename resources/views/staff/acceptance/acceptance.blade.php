@@ -29,26 +29,35 @@
                             <td class="align-middle">{{ $accept->tanggal_pengajuan }}</td>
                             <td class="align-middle">{{ $accept->staff->nama_staff }}</td>
                             <td class="align-middle text-center">
-                                <span class="badge badge-pill badge-primary">{{ $accept->status }}</span>
+                                @if($accept->status == 'Settlement' || $accept->status == 'Requested')
+                                    <span class="badge badge-pill badge-primary">{{ $accept->status }}</span>
+                                @elseif ($accept->status == 'Rejected')
+                                    <span class="badge badge-pill badge-danger">{{ $accept->status }}</span>
+                                @else
+                                    <span class="badge badge-pill badge-success">{{ $accept->status }}</span>
+                                @endif
                             </td>
                             <td class="align-middle text-center">
+                                {{--                                <a class="btn btn-primary"--}}
+                                {{--                                   href="{{ route('staff.request.myrequestbyid', encrypt($accept->id_request)) }}">--}}
+                                {{--                                    <i class="fas fa-info-circle"></i>--}}
+                                {{--                                </a>--}}
                                 <a class="btn btn-primary"
-                                   href="{{ route('staff.request.myrequestbyid', encrypt($accept)) }}">
+                                   href="{{ route('staff.request.myrequestbyid', $accept->id_request) }}">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
-                                @if($accept->acceptance->hasPermission(auth()->user()->id_staff, $accept->id_request))
-                                    @if($accept->status == 'Requested')
+                                @if($accept->status == 'Requested')
+                                    @if($accept->acceptance->hasPermission(auth()->user()->id_staff, $accept->id_request) == 1)
                                         <a class="btn btn-success"
-                                           href="{{ route('staff.acceptance.accept', encrypt($accept)) }}"
+                                           href="{{ route('staff.acceptance.accept', $accept->id_request) }}"
                                            onclick="return confirm('Are you sure to accept this request ?')">
                                             <i class="fas fa-check"></i>
                                         </a>
                                         <a class="btn btn-danger"
-                                           href="{{ route('staff.acceptance.decline', encrypt($accept)) }}"
+                                           href="{{ route('staff.acceptance.decline', $accept->id_request) }}"
                                            onclick="return confirm('Are you sure to decline this request ?')">
                                             <i class="fas fa-times"></i>
                                         </a>
-
                                     @endif
                                 @endif
                             </td>
