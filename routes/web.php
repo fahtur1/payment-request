@@ -70,7 +70,7 @@ Route::prefix('/admin')->middleware(['auth:web', 'role:admin'])->group(function 
 
     Route::get('/home', [WebAdminController::class, 'showHome'])->name('admin.home');
 
-    Route::get('/staff', [WebAdminController::class, 'showStaff'])->name('admin.staff');
+    Route::get('/stafff', [WebAdminController::class, 'showStaff'])->name('admin.staff');
 
     Route::get('/add_staff', [WebAdminController::class, 'addStaff'])->name('admin.add_staff');
     Route::post('/add_staff', [StaffController::class, 'register'])->name('admin.add_staff.post');

@@ -49,7 +49,7 @@
                 <span>Home</span></a>
         </li>
 
-        <li class="nav-item {{ str_contains(Request::url(), 'staff') ? 'active' : '' }}">
+        <li class="nav-item {{ str_contains(Request::url(), 'stafff') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin.staff') }}">
                 <i class="fas fa-fw fa-user"></i>
                 <span>Staff</span></a>
