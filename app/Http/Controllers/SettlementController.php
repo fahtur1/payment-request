@@ -12,7 +12,10 @@ class SettlementController extends Controller
         $statusFile = false;
         $statusSettle = false;
 
-        foreach ($id->item as $item) {
+        $statusFile = false;
+        $statusSettle = false;
+
+        foreach ($settlement->item as $item) {
             $name = uniqid('settlement-');
             $keyFile = 'img-' . $item->id_item;
             $keyAmountSettle = 'settlement-' . $item->id_item;
@@ -20,7 +23,7 @@ class SettlementController extends Controller
             if ($request->hasFile($keyFile)) {
                 $file = $request->file($keyFile);
 
-                $statusFile = $file->storeAs('/', $name . '.' . $file->extension(), 'settlement');
+                $statusFile = $file->storeAs('public/settlement/', $name . '.' . $file->extension());
 
                 $item->settlement_amount = $request->get($keyAmountSettle);
                 $item->settlement = $name . '.' . $file->extension();
@@ -34,8 +37,8 @@ class SettlementController extends Controller
         }
 
         if ($statusFile && $statusSettle) {
-            $id->status = 'Done';
-            $id->save();
+            $settlement->status = 'Done';
+            $settlement->save();
         }
 
         return redirect()->route('staff.settlement')

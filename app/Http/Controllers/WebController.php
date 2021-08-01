@@ -9,24 +9,11 @@ class WebController extends Controller
 {
     public function showHome()
     {
-        $totalRequest = PaymentRequest::where('id_staff', auth()->user()->id_staff)
-            ->get()
-            ->count();
-
-        $requestDone = PaymentRequest::where('status', 'Done')
-            ->where('id_staff', auth()->user()->id_staff)
-            ->get()
-            ->count();
-
-        $pendingRequest = PaymentRequest::where('id_staff', auth()->user()->id_staff)
-            ->where('status', 'Requested')
-            ->orWhere('status', 'Settlement')
-            ->get()
-            ->count();
-
-        $declinedRequest = PaymentRequest::where('status', 'Rejected')
-            ->Where('status', 'Rejected')
-            ->where('id_staff', auth()->user()->id_staff)
+        $totalRequest = PaymentRequest::all()->count();
+        $declinedRequest = PaymentRequest::where('status', 'Rejected')->get()->count();
+        $requestDone = PaymentRequest::where('status', 'Done')->get()->count();
+        $pendingRequest = PaymentRequest::where('status', 'Settlement')
+            ->orWhere('status', 'Requested')
             ->get()
             ->count();
 

@@ -43,7 +43,6 @@ class PaymentExportWithChange implements WithEvents
 
                 // set Date
                 $event->getWriter()->getSheetByIndex(0)->setCellValue('G5', $requestDate);
-                $event->getWriter()->getSheetByIndex(0)->setCellValue('A32', 'Date : ' . $requestDate);
 
                 // set Item
                 $startRowPr = 11;
@@ -67,26 +66,6 @@ class PaymentExportWithChange implements WithEvents
                 $event->getWriter()->getSheetByIndex(0)->setCellValue('G21', $totalPr);
                 $event->getWriter()->getSheetByIndex(0)->setCellValue('G22', 0);
                 $event->getWriter()->getSheetByIndex(0)->setCellValue('G23', $totalPr);
-
-                foreach ($this->payment->acceptance as $accept) {
-                    $dateAcceptRaw = date_create($accept->created_at);
-                    $acceptedDate = date_format($dateAcceptRaw, 'd-m-Y');
-
-                    switch ($accept->staff->position->id_subposition) {
-                        case 1:
-                            $event->getWriter()->getSheetByIndex(0)->setCellValue('C30', $accept->staff->nama_staff);
-                            $event->getWriter()->getSheetByIndex(0)->setCellValue('C32', 'Date : ' . $acceptedDate);
-                            break;
-                        case 2:
-                            $event->getWriter()->getSheetByIndex(0)->setCellValue('D30', $accept->staff->nama_staff);
-                            $event->getWriter()->getSheetByIndex(0)->setCellValue('D32', 'Date : ' . $acceptedDate);
-                            break;
-                        case 3:
-                            $event->getWriter()->getSheetByIndex(0)->setCellValue('F30', $accept->staff->nama_staff);
-                            $event->getWriter()->getSheetByIndex(0)->setCellValue('F32', 'Date : ' . $acceptedDate);
-                            break;
-                    }
-                }
 
                 /*
                     Cash Advance Request
