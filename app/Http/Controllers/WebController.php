@@ -36,13 +36,11 @@ class WebController extends Controller
             ->with(['myrequests' => $myrequest]);
     }
 
-    public function showMyRequestById($id)
+    public function showMyRequestById(PaymentRequest $id)
     {
-        $myrequest = PaymentRequest::find(decrypt($id))->first();
-
         return view('staff.payment_request.detail_request')
             ->with(['title' => 'Detail Request'])
-            ->with(['myrequest' => $myrequest]);
+            ->with(['myrequest' => $id]);
     }
 
     public function showSettlement()
@@ -58,13 +56,11 @@ class WebController extends Controller
             ->with(['settlements' => $settlement]);
     }
 
-    public function showUploadSettlement($id)
+    public function showUploadSettlement(PaymentRequest $id)
     {
-        $settlement = decrypt($id);
-
         return view('staff.settlement.upload')
             ->with(['title' => 'Upload Settlement'])
-            ->with(['settlement' => $settlement]);
+            ->with(['settlement' => $id]);
     }
 
     public function showAddRequest()

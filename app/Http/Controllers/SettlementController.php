@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PaymentRequest;
 use Illuminate\Http\Request;
 
 class SettlementController extends Controller
 {
-    public function updateSettlement(Request $request, $id)
+    public function updateSettlement(Request $request,PaymentRequest $id)
     {
-        $settlement = decrypt($id);
+        $statusFile = false;
+        $statusSettle = false;
 
         $statusFile = false;
         $statusSettle = false;

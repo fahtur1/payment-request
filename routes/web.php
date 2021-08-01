@@ -58,6 +58,8 @@ Route::prefix('/staff')->middleware(['auth:web', 'role:staff'])->group(function 
 
     Route::get('/export/{id}', [PaymentExportController::class, 'export'])->name('export.pr');
 
+    Route::get('/export_pdf/{id}', [PaymentExportController::class, 'exportPdf'])->name('export.pdf');
+
 });
 
 Route::prefix('/admin')->middleware(['auth:web', 'role:admin'])->group(function () {
@@ -68,7 +70,7 @@ Route::prefix('/admin')->middleware(['auth:web', 'role:admin'])->group(function 
 
     Route::get('/home', [WebAdminController::class, 'showHome'])->name('admin.home');
 
-    Route::get('/staff', [WebAdminController::class, 'showStaff'])->name('admin.staff');
+    Route::get('/stafff', [WebAdminController::class, 'showStaff'])->name('admin.staff');
 
     Route::get('/add_staff', [WebAdminController::class, 'addStaff'])->name('admin.add_staff');
     Route::post('/add_staff', [StaffController::class, 'register'])->name('admin.add_staff.post');

@@ -11,9 +11,27 @@ use Barryvdh\DomPDF\Facade as PDF;
 
 class PaymentExportController extends Controller
 {
-    public function export($id)
+    public function export(PaymentRequest $id)
     {
-        $payment = PaymentRequest::find(decrypt($id))->first();
+        $grandTotal = 0;
+        $budget = 0;
+
+        foreach ($id->item as $item) {
+            $grandTotal += $item->settlement_amount;
+            $budget += $item->amount;
+        }
+
+        $change = $budget - $grandTotal;
+
+        $randomName = uniqid();
+
+        $fileNameExcel = 'settlement-' . date('d-m-Y') . '-' . $randomName . '.xlsx';
+
+        if ($change <= 0) {
+            return Excel::download(new PaymentExportWithoutChange($id), $fileNameExcel);
+        } else {
+            return Excel::download(new PaymentExportWithChange($id, $change), $fileNameExcel);
+        }
 
         $grandTotal = 0;
         $budget = 0;

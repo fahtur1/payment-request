@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class AcceptanceController extends Controller
 {
-    public function acceptRequest($id)
+    public function acceptRequest(PaymentRequest $id)
     {
-        $payment = PaymentRequest::find(decrypt($id))->first();
+        $payment = PaymentRequest::find($id)->first();
 
         $accpt = Acceptance::create([
             'id_acceptance' => uniqid('accpt-'),
@@ -18,38 +18,33 @@ class AcceptanceController extends Controller
             'id_staff' => auth()->user()->id_staff
         ]);
 
-        if ($accpt) {
-            if ($payment->acceptance->count() == 3) {
-                $payment->status = 'Settlement';
 
-                if ($payment->save()) {
-                    return redirect()->back()->with([
-                        'status' => 'Request has been accepted!',
-                        'class' => 'success'
-                    ]);
-                } else {
-                    return redirect()->back()->with([
-                        'status' => 'Failed to accepting request!',
-                        'class' => 'danger'
-                    ]);
-                }
-            } else {
+        if ($payment->acceptance->count() == 3) {
+            $payment->status = 'Settlement';
+
+            if ($payment->save()) {
                 return redirect()->back()->with([
                     'status' => 'Request has been accepted!',
                     'class' => 'success'
                 ]);
+            } else {
+                return redirect()->back()->with([
+                    'status' => 'Failed to accepting request!',
+                    'class' => 'danger'
+                ]);
             }
         } else {
             return redirect()->back()->with([
-                'status' => 'Failed to accepting request!',
-                'class' => 'danger'
+                'status' => 'Request has been accepted!',
+                'class' => 'success'
             ]);
         }
+
     }
 
     public function declineRequest($id)
     {
-        if (PaymentRequest::where('id_request', decrypt($id))->update(['status' => 'Rejected'])) {
+        if (PaymentRequest::where('id_request', $id)->update(['status' => 'Rejected'])) {
             return redirect()->back()->with([
                 'status' => 'Request has been <strong>rejected!</strong>',
                 'class' => 'success'

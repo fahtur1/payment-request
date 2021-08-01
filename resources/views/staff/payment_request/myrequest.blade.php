@@ -35,7 +35,7 @@
                             </td>
                             <td class="align-middle text-center">
                                 <a class="btn btn-primary"
-                                   href="{{ route('staff.request.myrequestbyid', encrypt($myrequest)) }}">
+                                   href="{{ route('staff.request.myrequestbyid', $myrequest) }}">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
                             </td>
