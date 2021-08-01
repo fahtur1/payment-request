@@ -9,7 +9,20 @@ class WebController extends Controller
 {
     public function showHome()
     {
-        return view('staff.home')->with(['title' => 'Home']);
+        $totalRequest = PaymentRequest::all()->count();
+        $declinedRequest = PaymentRequest::where('status', 'Rejected')->get()->count();
+        $requestDone = PaymentRequest::where('status', 'Done')->get()->count();
+        $pendingRequest = PaymentRequest::where('status', 'Settlement')
+            ->orWhere('status', 'Requested')
+            ->get()
+            ->count();
+
+        return view('staff.home')
+            ->with(['title' => 'Home'])
+            ->with(['total_request' => $totalRequest])
+            ->with(['pending_request' => $pendingRequest])
+            ->with(['declined_request' => $declinedRequest])
+            ->with(['request_done' => $requestDone]);
     }
 
     public function showMyRequest()

@@ -9,7 +9,10 @@ class PositionController extends Controller
 {
     public function createPosition(Request $request)
     {
-        $data['nama_position'] = $request->post('nama_position');
+        $data = [
+            'nama_position' => $request->post('nama_position'),
+            'id_subposition' => $request->post('id_subposition')
+        ];
 
         $position = Position::create($data);
 
@@ -27,6 +30,7 @@ class PositionController extends Controller
     public function editPosition(Request $request, Position $position)
     {
         $position->nama_position = $request->post('nama_position');
+        $position->id_subposition = $request->post('id_subposition');
 
         if ($position->save()) {
             return redirect()->route('admin.position')

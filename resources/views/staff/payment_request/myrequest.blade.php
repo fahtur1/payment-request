@@ -25,7 +25,13 @@
                             <td class="align-middle">{{ $loop->iteration }}</td>
                             <td class="align-middle">{{ $myrequest->tanggal_pengajuan }}</td>
                             <td class="align-middle text-center">
-                                <span class="badge badge-pill badge-primary">{{ $myrequest->status }}</span>
+                                @if($myrequest->status == 'Settlement' || $myrequest->status == 'Requested')
+                                    <span class="badge badge-pill badge-primary">{{ $myrequest->status }}</span>
+                                @elseif($myrequest->status == 'Rejected')
+                                    <span class="badge badge-pill badge-danger">{{ $myrequest->status }}</span>
+                                @else
+                                    <span class="badge badge-pill badge-success">{{ $myrequest->status }}</span>
+                                @endif
                             </td>
                             <td class="align-middle text-center">
                                 <a class="btn btn-primary"

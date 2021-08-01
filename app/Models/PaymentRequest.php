@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,8 +13,6 @@ class PaymentRequest extends Model
     protected $primaryKey = 'id_request';
 
     public $incrementing = false;
-
-    public $timestamps = false;
 
     protected $fillable = [
         'id_request', 'id_staff', 'tanggal_pengajuan', 'status'

@@ -13,6 +13,18 @@
                     <small id="emailHelp" class="form-text text-danger">{{ $message }}</small>
                     @enderror
                 </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">Subposition</label>
+                    <select id="inputState" class="form-control" name="id_subposition">
+                        @foreach($positions as $pstn)
+                            <option
+                                value="{{ $pstn->subposition->id_subposition }}">{{ $pstn->subposition->nama_subposition }}</option>
+                        @endforeach
+                    </select>
+                    @error('id_subposition')
+                    <small id="emailHelp" class="form-text text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
                 <button type="submit" class="btn btn-primary">Add Position</button>
             </form>
         </div>

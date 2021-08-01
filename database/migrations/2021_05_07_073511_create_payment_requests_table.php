@@ -20,6 +20,7 @@ class CreatePaymentRequestsTable extends Migration
             $table->foreign('id_staff')->references('id_staff')->on('staff');
             $table->string('tanggal_pengajuan');
             $table->string('status');
+            $table->timestamps();
         });
     }
 

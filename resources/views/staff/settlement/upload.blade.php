@@ -5,6 +5,14 @@
 @endsection
 
 @section('content')
+    @if(session('status'))
+        <div class="alert alert-{{ session('class') }} alert-dismissible fade show" role="alert">
+            {{ session('status') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <form action="{{ route('staff.settlement.upload.post', encrypt($settlement)) }}" method="post"
           enctype="multipart/form-data">
         @csrf
@@ -33,7 +41,8 @@
                                 <td class="align-middle">{{ $item->quantity }}</td>
                                 <td class="align-middle">{{ $item->unit_of_measurement }}</td>
                                 <td class="align-middle" style="width: 14%">
-                                    <input type="number" class="form-control" name="settlement_amount" value="0">
+                                    <input type="number" class="form-control" name="settlement-{{ $item->id_item }}"
+                                           value="{{ $item->amount }}">
                                 </td>
                                 <td class="align-middle text-center">
                                     @if($item->settlement == null)
@@ -85,8 +94,6 @@
                 inputFile.addEventListener('change', (e) => {
                     let url = URL.createObjectURL(e.target.files[0]);
                     document.getElementById(`img-${id}`).src = url;
-
-                    console.log(e.target.files[0]);
                 });
             });
         });
