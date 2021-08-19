@@ -18,7 +18,7 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="formGroupExampleInput2">Allow To Accept Payment Request</label>
+                    <label for="formGroupExampleInput2">Choose a Position</label>
                     <select id="inputState" class="form-control" name="id_subposition">
                         <option selected
                                 value="{{ $position->subposition->id_subposition }}">{{ $position->subposition->nama_subposition }}</option>

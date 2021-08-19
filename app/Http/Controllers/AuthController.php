@@ -28,10 +28,16 @@ class AuthController extends Controller
         ]);
 
         if ($login) {
-            if (auth()->user()->role->id_role == 1) {
-                return redirect()->route('admin.home');
-            } else if (auth()->user()->role->id_role == 2) {
-                return redirect()->route('staff.home');
+            if (auth()->user()->is_active == 1) {
+                if (auth()->user()->role->id_role == 1) {
+                    return redirect()->route('admin.home');
+                } else if (auth()->user()->role->id_role == 2) {
+                    return redirect()->route('staff.home');
+                }
+            } else {
+                return redirect()->route('auth.login')
+                    ->with('status', 'User has been deleted!')
+                    ->with('class', 'danger');
             }
         } else {
             return redirect()->route('auth.login')
@@ -77,5 +83,4 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/');
     }
-
 }

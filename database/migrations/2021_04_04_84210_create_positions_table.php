@@ -17,6 +17,7 @@ class CreatePositionsTable extends Migration
         Schema::create('position', function (Blueprint $table) {
             $table->id('id_position');
             $table->string('nama_position');
+            $table->string('is_active');
             $table->foreignId('id_subposition')->references('id_subposition')->on('subposition');
         });
     }

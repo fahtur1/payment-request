@@ -66,6 +66,15 @@ class PaymentExportWithoutChange implements WithEvents
                 $event->getWriter()->getSheetByIndex(0)->setCellValue('G22', 0);
                 $event->getWriter()->getSheetByIndex(0)->setCellValue('G23', $totalPr);
 
+                foreach ($this->payment->acceptance as $accept) {
+                    if ($accept->staff->position->id_subposition == 1) {
+                        $event->getWriter()->getSheetByIndex(0)->setCellValue('C30', $accept->staff->nama_staff);
+                    } else if ($accept->staff->position->id_subposition == 2) {
+                        $event->getWriter()->getSheetByIndex(0)->setCellValue('D30', $accept->staff->nama_staff);
+                    } else if ($accept->staff->position->id_subposition == 3) {
+                        $event->getWriter()->getSheetByIndex(0)->setCellValue('F30', $accept->staff->nama_staff);
+                    }
+                }
                 /*
                     Cash Advance Request
                 */
@@ -230,9 +239,7 @@ class PaymentExportWithoutChange implements WithEvents
                             break;
                     }
                 }
-
             }
         ];
     }
-
 }

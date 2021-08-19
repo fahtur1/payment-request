@@ -55,24 +55,8 @@
                 Payment Request
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            {{-- <li class="nav-item">--}}
-            {{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"--}}
-            {{-- aria-expanded="true" aria-controls="collapseTwo">--}}
-            {{-- <i class="fas fa-fw fa-cog"></i>--}}
-            {{-- <span>Components</span>--}}
-            {{-- </a>--}}
-            {{-- <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">--}}
-            {{-- <div class="bg-white py-2 collapse-inner rounded">--}}
-            {{-- <h6 class="collapse-header">Custom Components:</h6>--}}
-            {{-- <a class="collapse-item" href="buttons.html">Buttons</a>--}}
-            {{-- <a class="collapse-item" href="cards.html">Cards</a>--}}
-            {{-- </div>--}}
-            {{-- </div>--}}
-            {{-- </li>--}}
-
             <!-- Nav Item - Tables -->
-            <li class="nav-item {{ str_contains(Request::url(), 'request') ? 'active' : '' }}">
+            <li class="nav-item {{ str_contains(Request::url(), 'my_request') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('staff.request.myrequest') }}">
                     <i class="fas fa-fw fa-bars"></i>
                     <span>My Request</span></a>
@@ -91,26 +75,6 @@
                     <span>Acceptance</span></a>
             </li>
             @endif
-
-            {{-- <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-
-        <div class="sidebar-heading">
-            Donator
-        </div>
-
-        <li class="nav-item {{ str_contains(Request::url(), 'list_donator') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('staff.list_donator') }}">
-                <i class="fas fa-fw fa-donate"></i>
-                <span>List Donator</span></a>
-            </li>
-
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div> --}}
 
         </ul>
         <!-- End of Sidebar -->
@@ -160,19 +124,11 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('staff.profile') }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
+                                {{-- <div class="dropdown-divider"></div> --}}
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout

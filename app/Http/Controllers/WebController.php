@@ -45,10 +45,15 @@ class WebController extends Controller
 
     public function showSettlement()
     {
-        $settlement = PaymentRequest::where('id_staff', auth()->user()->id_staff)
-            ->where('status', 'Settlement')
-            ->orWhere('status', 'Done')
-            ->orderByDesc('tanggal_pengajuan')
+        $idStaff = auth()->user()->id_staff;
+
+        $settlement = PaymentRequest::where([
+            ['id_staff', $idStaff],
+            ['status', 'Done']
+        ])->orWhere([
+            ['id_staff', $idStaff],
+            ['status', 'Settlement']
+        ])->orderByDesc('tanggal_pengajuan')
             ->get();
 
         return view('staff.settlement.settlement')
@@ -84,4 +89,15 @@ class WebController extends Controller
             ->with(['title' => 'List Donator']);
     }
 
+    public function showProfile()
+    {
+        return view('staff.profile.profile')
+            ->with(['title' => 'Profile']);
+    }
+
+    public function showEditProfile()
+    {
+        return view('staff.profile.edit_profile')
+            ->with(['title' => 'Edit Profile']);
+    }
 }

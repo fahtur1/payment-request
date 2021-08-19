@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class StaffController extends Controller
 {
@@ -45,8 +46,48 @@ class StaffController extends Controller
         }
     }
 
-    public function edit(Request $request, Staff $staff)
+    public function editStaff(Request $request)
     {
+        $staff = auth()->user();
+
+        $checkbox = $request->post('checkboxPassword');
+        $oldPassword = $request->post('old_password');
+        $newPassword = $request->post('new_password');
+
+        if ($checkbox == 'on') {
+            $request->validate([
+                'old_password' => ['required', 'min:6'],
+                'new_password' => ['required', 'min:6']
+            ]);
+
+            if ($this->checkOldPassword($oldPassword)) {
+                $staff->password = Hash::make($newPassword);
+            } else {
+                return redirect()
+                    ->back()
+                    ->with('message', 'Old Password is wrong!')
+                    ->with('class', 'danger');
+            }
+        }
+
+        $staff->nama_staff = $request->post('nama_staff');
+        $staff->tanggal_lahir = date('d-m-Y', strtotime($request->post('tanggal_lahir')));
+
+        if ($staff->save()) {
+            return redirect()->route('staff.profile')
+                ->with('message', 'Staff has been updated!')
+                ->with('class', 'success');
+        } else {
+            return redirect()->route('staff.profile')
+                ->with('message', 'Failed to update staff!')
+                ->with('class', 'danger');
+        }
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $staff = Staff::find(decrypt($id));
+
         $staff->id_position = $request->post('id_position');
 
         if ($staff->save()) {
@@ -62,9 +103,10 @@ class StaffController extends Controller
 
     public function delete($id)
     {
-        $staff = Staff::findOrFail(decrypt($id))->delete();
+        $staff = Staff::findOrFail(decrypt($id));
+        $staff->is_active = '0';
 
-        if ($staff) {
+        if ($staff->save()) {
             return redirect()->route('admin.staff')
                 ->with('status', 'Staff has been deleted !')
                 ->with('class', 'success');;
@@ -73,5 +115,10 @@ class StaffController extends Controller
                 ->with('status', 'Failed to delete Staff !')
                 ->with('class', 'danger');
         }
+    }
+
+    public function checkOldPassword($oldPassword)
+    {
+        return Hash::check($oldPassword, auth()->user()->password);
     }
 }
