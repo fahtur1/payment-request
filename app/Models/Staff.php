@@ -21,6 +21,7 @@ class Staff extends Authenticatable
         'tanggal_masuk',
         'tanggal_lahir',
         'password',
+        'is_active',
         'amount_pr_requested',
         'id_role',
         'id_position'
@@ -31,7 +32,8 @@ class Staff extends Authenticatable
     ];
 
     protected $attributes = [
-        'amount_pr_requested' => '0'
+        'amount_pr_requested' => '0',
+        'is_active' => '1'
     ];
 
     protected $casts = [
@@ -47,5 +49,4 @@ class Staff extends Authenticatable
     {
         return $this->belongsTo(Position::class, 'id_position', 'id_position');
     }
-
 }

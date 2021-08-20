@@ -20,6 +20,7 @@ class CreateStaffTable extends Migration
             $table->string('tanggal_lahir');
             $table->string('tanggal_masuk');
             $table->string('password');
+            $table->string('is_active');
             $table->string('amount_pr_requested')->nullable();
             $table->foreignId('id_role')->references('id_role')->on('role');
             $table->foreignId('id_position')->references('id_position')->on('position');

@@ -46,8 +46,9 @@ class PositionController extends Controller
     public function deletePosition($id)
     {
         $position = Position::findOrFail(decrypt($id));
+        $position->is_active = '0';
 
-        if ($position->delete()) {
+        if ($position->save()) {
             return redirect()->route('admin.position')
                 ->with('status', 'Position has been deleted!')
                 ->with('class', 'success');

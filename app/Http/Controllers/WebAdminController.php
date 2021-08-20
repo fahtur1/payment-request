@@ -9,8 +9,12 @@ class WebAdminController extends Controller
 {
     public function showHome()
     {
-        $totalStaff = Staff::where('id_role', 2)->count();
-        $totalPosition = Position::all()->count();
+        $totalStaff = Staff::where([
+            ['id_role', 2],
+            ['is_active', '1']
+        ])->count();
+
+        $totalPosition = Position::where('is_active', '1')->count();
 
         return view('admin.home')
             ->with(['title' => 'Home'])
@@ -20,7 +24,10 @@ class WebAdminController extends Controller
 
     public function showStaff()
     {
-        $staff = Staff::where('id_role', 2)->get();
+        $staff = Staff::where([
+            ['id_role', 2],
+            ['is_active', '1']
+        ])->get();
 
         return view('admin.staff')
             ->with(['title' => 'Staff'])
@@ -29,7 +36,7 @@ class WebAdminController extends Controller
 
     public function addStaff()
     {
-        $position = Position::all();
+        $position = Position::where('is_active', '1')->get();
 
         return view('admin.add_staff')
             ->with(['title' => 'Add Staff'])
@@ -38,7 +45,7 @@ class WebAdminController extends Controller
 
     public function showListPosition()
     {
-        $position = Position::all();
+        $position = Position::where('is_active', '1')->get();
 
         return view('admin.position')
             ->with(['title' => 'Position'])
@@ -47,7 +54,7 @@ class WebAdminController extends Controller
 
     public function showAddPosition()
     {
-        $positions = Position::all();
+        $positions = Position::where('is_active', '1')->get();
 
         return view('admin.add_position')
             ->with(['title' => 'Add Position'])
@@ -56,7 +63,7 @@ class WebAdminController extends Controller
 
     public function showEditPosition($id)
     {
-        $positions = Position::all();
+        $positions = Position::where('is_active', '1')->get();
         $position = Position::find(decrypt($id));
 
         return view('admin.edit_position')
@@ -67,8 +74,8 @@ class WebAdminController extends Controller
 
     public function showEditStaff($id)
     {
-        $staff = Staff::find(decrypt($id))->first();
-        $position = Position::all();
+        $staff = Staff::find(decrypt($id));
+        $position = Position::where('is_active', '1')->get();
 
         return view('admin.edit_staff')
             ->with(['title' => 'Edit Staff'])

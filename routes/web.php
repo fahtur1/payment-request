@@ -54,12 +54,15 @@ Route::prefix('/staff')->middleware(['auth:web', 'role:staff'])->group(function 
             Route::get('/decline/{id}', [AcceptanceController::class, 'declineRequest'])->name('staff.acceptance.decline');
         });
 
+    Route::get('/profile', [WebController::class, 'showProfile'])->name('staff.profile');
+    Route::get('/profile/edit', [WebController::class, 'showEditProfile'])->name('staff.edit_profile');
+    Route::post('/profile/edit', [StaffController::class, 'editStaff'])->name('staff.edit_profile.post');
+
     Route::get('/list_donator', [WebController::class, 'showListDonator'])->name('staff.list_donator');
 
     Route::get('/export/{id}', [PaymentExportController::class, 'export'])->name('export.pr');
 
     Route::get('/export_pdf/{id}', [PaymentExportController::class, 'exportPdf'])->name('export.pdf');
-
 });
 
 Route::prefix('/admin')->middleware(['auth:web', 'role:admin'])->group(function () {
@@ -100,6 +103,4 @@ Route::prefix('auth')->group(function () {
 
     Route::get('/register', [AuthController::class, 'showRegister'])->name('auth.register');
     Route::post('/register', [AuthController::class, 'postRegister'])->name('auth.register.post');
-
 });
-
