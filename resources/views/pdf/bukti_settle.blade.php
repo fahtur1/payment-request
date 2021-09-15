@@ -9,11 +9,13 @@
 <body>
     <table border="0">
         @foreach($payment->item as $item)
-        <tr>
-            <td>
-                <img width="500" src="{{ storage_path('app/public/settlement/' . $item->settlement) }}" alt="">
-            </td>
-        </tr>
+        <center>
+            <tr>
+                <td>
+                    <img width="500" src="{{ storage_path('app/public/settlement/' . $item->settlement) }}" alt="">
+                </td>
+            </tr>
+        </center>
         @endforeach
     </table>
 </body>
