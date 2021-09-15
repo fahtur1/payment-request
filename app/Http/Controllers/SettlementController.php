@@ -7,13 +7,12 @@ use Illuminate\Http\Request;
 
 class SettlementController extends Controller
 {
-    public function updateSettlement(Request $request, PaymentRequest $settlement)
+    public function updateSettlement(Request $request, $id)
     {
         $statusFile = false;
         $statusSettle = false;
 
-        $statusFile = false;
-        $statusSettle = false;
+        $settlement = PaymentRequest::find($id);
 
         foreach ($settlement->item as $item) {
             $name = uniqid('settlement-');
