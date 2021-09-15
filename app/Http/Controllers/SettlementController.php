@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class SettlementController extends Controller
 {
-    public function updateSettlement(Request $request,PaymentRequest $id)
+    public function updateSettlement(Request $request, PaymentRequest $settlement)
     {
         $statusFile = false;
         $statusSettle = false;
