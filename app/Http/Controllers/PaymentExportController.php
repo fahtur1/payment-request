@@ -35,11 +35,12 @@ class PaymentExportController extends Controller
         }
     }
 
-    function exportPdf(PaymentRequest $id)
+    function exportPdf($id)
     {
-        $fileNamePdf = 'settlement-' . date('d-m-Y') . '-' . uniqid() . '.pdf'; 
+        $payment = PaymentRequest::find($id);
+        $fileNamePdf = 'settlement-' . date('d-m-Y') . '-' . uniqid() . '.pdf';
 
-        $pdf = PDF::loadView('pdf.bukti_settle', ['payment' => $id]);
+        $pdf = PDF::loadView('pdf.bukti_settle', ['payment' => $payment]);
         return $pdf->download($fileNamePdf);
     }
 

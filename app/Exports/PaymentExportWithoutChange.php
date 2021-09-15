@@ -204,7 +204,7 @@ class PaymentExportWithoutChange implements WithEvents
                     $event->getWriter()->getSheetByIndex(3)->setCellValue('B' . $startRowCashAdvR, $item->description);
                     $event->getWriter()->getSheetByIndex(3)->setCellValue('E' . $startRowCashAdvR, $item->references);
                     $event->getWriter()->getSheetByIndex(3)->setCellValue('F' . $startRowCashAdvR, $item->budget_available);
-                    $event->getWriter()->getSheetByIndex(3)->setCellValue('I' . $startRowCashAdvR, $item->amount);
+                    $event->getWriter()->getSheetByIndex(3)->setCellValue('I' . $startRowCashAdvR, $item->settlement_amount);
                     $event->getWriter()->getSheetByIndex(3)->setCellValue('J' . $startRowCashAdvR, $item->project);
                     $event->getWriter()->getSheetByIndex(3)->setCellValue('L' . $startRowCashAdvR, $item->account_code);
                     $startRowCashAdvR++;
