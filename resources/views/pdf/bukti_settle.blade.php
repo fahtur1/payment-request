@@ -11,7 +11,7 @@
         @foreach($payment->item as $item)
         <tr>
             <td>
-                <img width="500" src="{{ asset('storage/public/settlement/' . $item->settlement) }}" alt="">
+                <img width="500" src="{{ storage_path('app/public/settlement/' . $item->settlement) }}" alt="">
             </td>
         </tr>
         @endforeach
