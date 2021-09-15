@@ -19,6 +19,8 @@ jobs:
         run: composer update
       - name: Generate key
         run: php artisan key:generate
+      - name: Create Symbolic Link to Storage
+        run: php artisan storage:link
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
