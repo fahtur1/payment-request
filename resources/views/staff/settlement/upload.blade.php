@@ -13,7 +13,7 @@
     </button>
 </div>
 @endif
-<form action="{{ route('staff.settlement.upload.post', encrypt($settlement)) }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('staff.settlement.upload.post', $settlement) }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="card shadow mb-4">
         <div class="card-body">
